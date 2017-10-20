@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const PROD = JSON.parse(process.env.NODE_ENV || '0');
 
@@ -60,6 +61,7 @@ module.exports = {
 
     },
     plugins: PROD ? [
+        new OptimizeCssAssetsPlugin(),
         new ExtractTextPlugin({
             filename: "../css/blog-[hash].css",
             disable: false,
