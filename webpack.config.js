@@ -1,4 +1,17 @@
-var path = require('path');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
+const PROD = JSON.parse(process.env.NODE_ENV || '0');
+
+const EXTRACT_CSS = PROD ? {
+    test: /.scss$/,
+    use: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: "css-loader!sass-loader",
+    })
+} : {};
 
 module.exports = {
     entry: {
@@ -8,8 +21,8 @@ module.exports = {
         ]
     },
     output: {
-        path: path.resolve(__dirname, 'blog/static/js'),
-        filename: 'blog.js',
+        path: path.resolve(__dirname, 'blog/static/dist/js'),
+        filename: PROD ? 'blog-[hash].js' : 'blog.js',
     },
     module: {
         rules: [
@@ -33,6 +46,7 @@ module.exports = {
             },
             ]
         },
+        EXTRACT_CSS,
         {
             test: /\.js$/,
             use: [{
@@ -42,9 +56,17 @@ module.exports = {
                 }
             }]
         }
-        ],
+        ]
 
     },
+    plugins: PROD ? [
+        new ExtractTextPlugin({
+            filename: "../css/blog-[hash].css",
+            disable: false,
+            allChunks: true
+        }),
+        new UglifyJSPlugin()
+    ] : []
     // devtool: 'source-map'
 
 }

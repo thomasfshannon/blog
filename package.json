@@ -4,7 +4,9 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack --hide-modules -w --config webpack.config.js",
+    "remove": "rm -rf blog/static/dist",
+    "dev": "NODE_ENV=0 webpack --hide-modules -w --config webpack.config.js",
+    "prod": "npm run remove && NODE_ENV=1 webpack --hide-modules -w --config webpack.config.js",
     "debug": "webpack --display-error-details --config webpack.config.js"
   },
   "author": "",
@@ -16,10 +18,12 @@
     "babel-preset-stage-2": "^6.24.1",
     "bootstrap-sass": "^3.3.7",
     "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.1.5",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.3"
