@@ -2,27 +2,30 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BundleTracker = require('webpack-bundle-tracker');
 
 const PROD = JSON.parse(process.env.NODE_ENV || '0');
 
-const EXTRACT_CSS = PROD ? {
+// currently building css if prod or not due to dealing with live changes across servers
+// ie (webpack-dev-server, python server)
+const EXTRACT_CSS = {
     test: /.scss$/,
     use: ExtractTextPlugin.extract({
         fallback: "style-loader",
         use: "css-loader!sass-loader",
     })
-} : {};
+};
 
 module.exports = {
     entry: {
         main: [
             path.resolve(__dirname, 'blog/static/src/js/app.js'),
             path.resolve(__dirname, 'blog/static/src/style/app.scss')
-        ]
+        ],
     },
     output: {
-        path: path.resolve(__dirname, 'blog/static/dist/js'),
+        path: path.resolve(__dirname, 'blog/static/dist/'),
         filename: PROD ? 'blog-[hash].js' : 'blog.js',
     },
     module: {
@@ -63,12 +66,21 @@ module.exports = {
     plugins: PROD ? [
         new OptimizeCssAssetsPlugin(),
         new ExtractTextPlugin({
-            filename: "../css/blog-[hash].css",
+            filename: 'blog-[hash].css',
             disable: false,
             allChunks: true
         }),
-        new UglifyJSPlugin()
-    ] : []
+        new UglifyJSPlugin(),
+        new BundleTracker({filename: './webpack-stats.json'})
+    ] : [
+        // the css is generated to avoid having some browser sync thing set up
+        new ExtractTextPlugin({
+            filename: 'blog.css',
+            disable: false,
+            allChunks: true
+        }),
+        new BundleTracker({filename: './webpack-stats.json'})
+    ]
     // devtool: 'source-map'
 
 }

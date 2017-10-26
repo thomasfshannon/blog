@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "remove": "rm -rf blog/static/dist",
-    "dev": "NODE_ENV=0 webpack --hide-modules -w --config webpack.config.js",
+    "serve": "npm run remove && NODE_ENV=0 webpack --hide-modules -w --config webpack.config.js",
+    "dev": "npm run remove && NODE_ENV=0 webpack --hide-modules -w --config webpack.config.js",
     "prod": "npm run remove && NODE_ENV=1 webpack --hide-modules --config webpack.config.js",
     "debug": "webpack --display-error-details --config webpack.config.js"
   },
@@ -27,6 +28,8 @@
     "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
+    "webpack-bundle-tracker": "^0.2.0",
     "webpack-dev-server": "^2.9.3"
-  }
+  },
+  "dependencies": {}
 }

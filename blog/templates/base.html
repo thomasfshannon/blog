@@ -21,8 +21,10 @@
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        {% load render_bundle from webpack_loader %}
+
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+        {% render_bundle 'main' 'css' %}
 
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
@@ -35,7 +37,8 @@
         {% block content %}{% endblock %}
 
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+
+        {% render_bundle 'main' 'js' %}
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}

@@ -9,7 +9,7 @@ DEBUG = True
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = environ.get('KEY')
 
-
+WEBPACK_DEV_SERVER = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
