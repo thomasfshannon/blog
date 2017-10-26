@@ -20,13 +20,13 @@ const EXTRACT_CSS = {
 module.exports = {
     entry: {
         main: [
-            path.resolve(__dirname, 'blog/static/src/js/app.js'),
-            path.resolve(__dirname, 'blog/static/src/style/app.scss')
+            path.resolve(__dirname, 'project/static/src/js/app.js'),
+            path.resolve(__dirname, 'project/static/src/style/app.scss')
         ],
     },
     output: {
-        path: path.resolve(__dirname, 'blog/static/dist/'),
-        filename: PROD ? 'blog-[hash].js' : 'blog.js',
+        path: path.resolve(__dirname, 'project/static/dist/'),
+        filename: PROD ? 'project-[hash].js' : 'project.js',
     },
     module: {
         rules: [
@@ -66,7 +66,7 @@ module.exports = {
     plugins: PROD ? [
         new OptimizeCssAssetsPlugin(),
         new ExtractTextPlugin({
-            filename: 'blog-[hash].css',
+            filename: 'project-[hash].css',
             disable: false,
             allChunks: true
         }),
@@ -75,11 +75,15 @@ module.exports = {
     ] : [
         // the css is generated to avoid having some browser sync thing set up
         new ExtractTextPlugin({
-            filename: 'blog.css',
+            filename: 'project.css',
             disable: false,
             allChunks: true
         }),
-        new BundleTracker({filename: './webpack-stats.json'})
+        new BundleTracker({filename: './webpack-stats.json'}),
+        new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery"
+        })
     ]
     // devtool: 'source-map'
 
