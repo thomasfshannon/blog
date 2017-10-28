@@ -67,7 +67,7 @@ class BlogTagIndexPage(Page):
 
 class CodeBlock(StructBlock):
     language_choices = [
-        ('javacript', 'Javacript'),
+        ('javascript', 'Javascript'),
         ('python', 'Python'),
         ('html', 'HTML'),
         ('css', 'CSS'),
