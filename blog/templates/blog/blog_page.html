@@ -19,10 +19,10 @@
         <div class="intro">{{ page.intro }}</div>
         
         {% for block in self.body %}
-            {% if block.block_type == 'html' %}
+            {% if block.block_type == 'code' %}
                 {% pygmentify %}
                     <code>
-                        <pre class="python">{{ block.value }}</pre>
+                        <pre class="{{ block.value.language }}">{{ block.value.code }}</pre>
                     </code>
                 {% endpygmentify %}
 

@@ -5,7 +5,7 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
-from wagtail.wagtailcore.blocks import RichTextBlock, RawHTMLBlock
+from wagtail.wagtailcore.blocks import RichTextBlock, RawHTMLBlock, StructBlock, ChoiceBlock, StreamBlock
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
@@ -65,14 +65,28 @@ class BlogTagIndexPage(Page):
         context['blogpages'] = blogpages
         return context
 
+class CodeBlock(StructBlock):
+    language_choices = [
+        ('javacript', 'Javacript'),
+        ('python', 'Python'),
+        ('html', 'HTML'),
+        ('css', 'CSS'),
+        ('c', 'C')
+    ]
+    language = ChoiceBlock(choices = language_choices)
+    code = RawHTMLBlock()
+    # language = ChoiceBlock(choices = language_choices)
+    # code = RawHTMLBlock()
+
+class BlogBlock(StreamBlock):
+    content = RichTextBlock(icon="pilcrow")
+    code = CodeBlock(icon='code')
+
 
 class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
-    body = StreamField([
-        ('rich_text', RichTextBlock(icon='doc-full', label='Rich Text')),
-        ('html', RawHTMLBlock(icon='site', label='HTML'))
-    ])
+    body = StreamField(BlogBlock())
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
 
