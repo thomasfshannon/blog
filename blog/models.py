@@ -5,9 +5,10 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
+from wagtail.wagtailcore.blocks import RichTextBlock, RawHTMLBlock
 from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.wagtailcore.fields import RichTextField, StreamField
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
@@ -68,7 +69,10 @@ class BlogTagIndexPage(Page):
 class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
-    body = RichTextField(blank=True)
+    body = StreamField([
+        ('rich_text', RichTextBlock(icon='doc-full', label='Rich Text')),
+        ('html', RawHTMLBlock(icon='site', label='HTML'))
+    ])
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
 
@@ -91,16 +95,9 @@ class BlogPage(Page):
             FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Blog information"),
         FieldPanel('intro'),
-        FieldPanel('body'),
+        StreamFieldPanel('body'),
         InlinePanel('gallery_images', label="Gallery images"),
     ]
-
-    # content_panels = Page.content_panels + [
-    #     FieldPanel('date'),
-    #     FieldPanel('intro'),
-    #     FieldPanel('body', classname="full"),
-    #     InlinePanel('gallery_images', label="Gallery images"),
-    # ]
 
 
 class BlogPageGalleryImage(Orderable):
