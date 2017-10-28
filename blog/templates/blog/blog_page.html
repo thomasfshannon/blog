@@ -8,7 +8,7 @@
     <div class="container">
         {% for item in page.gallery_images.all %}
             <div>
-                <img src="{{ item.file.url }}" alt="{{ item.title }}" />
+                <img class="img img-responsive" src="{{ item.image.file.url }}" alt="{{ item.title }}" />
                 <p>{{ item.caption }}</p>
             </div>
         {% endfor %}
