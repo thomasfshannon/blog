@@ -1,6 +1,7 @@
 // bootstrap variable needed to load fonts
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "./utils/code-highlights";
 
 body {
     color: #555;

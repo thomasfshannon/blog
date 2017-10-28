@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'search',
     'project',
     'blog',
+    'pygmentify',
     'webpack_loader',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',

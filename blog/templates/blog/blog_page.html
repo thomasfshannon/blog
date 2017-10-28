@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load pygmentify_tags %}
 
 {% block body_class %}template-blogpage{% endblock %}
 
@@ -16,13 +17,14 @@
         <p class="meta">{{ page.date }}</p>
 
         <div class="intro">{{ page.intro }}</div>
-
-
+        
         {% for block in self.body %}
             {% if block.block_type == 'html' %}
-                <code>
-                    <pre>{{ block.value }}</pre>
-                </code>
+                {% pygmentify %}
+                    <code>
+                        <pre class="python">{{ block.value }}</pre>
+                    </code>
+                {% endpygmentify %}
 
                 {% else %}
                 {{ block.value }}
