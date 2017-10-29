@@ -29,6 +29,10 @@
             {% elif block.block_type == 'raw_code' %}
                 {{ block.value.code }}
 
+            {% elif block.block_type == 'image' %}
+
+                <img class="img img-responsive" src="{{ block.value.image.file.url }}" alt="{{ block.value.image.title }}" />
+
                 {% else %}
                 {{ block.value }}
             {% endif %}
