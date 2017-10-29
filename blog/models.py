@@ -78,9 +78,15 @@ class CodeBlock(StructBlock):
     # language = ChoiceBlock(choices = language_choices)
     # code = RawHTMLBlock()
 
+
+class RawCodeBlock(StructBlock):
+    code = RawHTMLBlock()
+
+
 class BlogBlock(StreamBlock):
     content = RichTextBlock(icon="pilcrow")
     code = CodeBlock(icon='code')
+    raw_code = RawCodeBlock(icon='placeholder')
 
 
 class BlogPage(Page):
@@ -90,12 +96,12 @@ class BlogPage(Page):
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
 
-    def main_image(self):
-            gallery_item = self.gallery_images.first()
-            if gallery_item:
-                return gallery_item.image
-            else:
-                return None
+    # def main_image(self):
+    #         gallery_item = self.gallery_images.first()
+    #         if gallery_item:
+    #             return gallery_item.image
+    #         else:
+    #             return None
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
@@ -110,18 +116,18 @@ class BlogPage(Page):
         ], heading="Blog information"),
         FieldPanel('intro'),
         StreamFieldPanel('body'),
-        InlinePanel('gallery_images', label="Gallery images"),
+        # InlinePanel('gallery_images', label="Gallery images"),
     ]
 
 
-class BlogPageGalleryImage(Orderable):
-    page = ParentalKey(BlogPage, related_name='gallery_images')
-    image = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
-    )
-    caption = models.CharField(blank=True, max_length=250)
+# class BlogPageGalleryImage(Orderable):
+#     page = ParentalKey(BlogPage, related_name='gallery_images')
+#     image = models.ForeignKey(
+#         'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
+#     )
+#     caption = models.CharField(blank=True, max_length=250)
 
-    panels = [
-        ImageChooserPanel('image'),
-        FieldPanel('caption'),
-    ]
+#     panels = [
+#         ImageChooserPanel('image'),
+#         FieldPanel('caption'),
+#     ]
