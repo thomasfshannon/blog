@@ -5,11 +5,15 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
-from wagtail.wagtailcore.blocks import RichTextBlock, RawHTMLBlock, StructBlock, ChoiceBlock, StreamBlock
+from wagtail.wagtailcore.blocks import (
+    RichTextBlock, RawHTMLBlock, StructBlock, ChoiceBlock, StreamBlock
+)
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.wagtailcore.models import Page, Orderable
+from wagtail.wagtailcore.models import Page  # Orderable
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel, MultiFieldPanel, StreamFieldPanel
+)
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
@@ -43,11 +47,13 @@ class BlogIndexPage(Page):
     ]
 
     def get_context(self, request):
-        # Update context to include only published posts, ordered by reverse-chron
+        # Update context to include only published posts,
+        # ordered by reverse-chron
         context = super(BlogIndexPage, self).get_context(request)
         blogpages = self.get_children().live().order_by('-first_published_at')
         context['blogpages'] = blogpages
         return context
+
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('BlogPage', related_name='tagged_items')
@@ -66,6 +72,7 @@ class BlogTagIndexPage(Page):
         context['blogpages'] = blogpages
         return context
 
+
 class CodeBlock(StructBlock):
     language_choices = [
         ('javascript', 'Javascript'),
@@ -74,7 +81,7 @@ class CodeBlock(StructBlock):
         ('css', 'CSS'),
         ('c', 'C')
     ]
-    language = ChoiceBlock(choices = language_choices)
+    language = ChoiceBlock(choices=language_choices)
     code = RawHTMLBlock()
     # language = ChoiceBlock(choices = language_choices)
     # code = RawHTMLBlock()
@@ -88,7 +95,7 @@ class ImageBlock(StructBlock):
     image = ImageChooserBlock()
     caption = RichTextBlock(max_length=255, required=False)
 
-    panels = [ 
+    panels = [
         ImageChooserPanel('image'),
         FieldPanel('caption'),
     ]
@@ -108,13 +115,6 @@ class BlogPage(Page):
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
 
-    # def main_image(self):
-    #         gallery_item = self.gallery_images.first()
-    #         if gallery_item:
-    #             return gallery_item.image
-    #         else:
-    #             return None
-
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
@@ -132,8 +132,6 @@ class BlogPage(Page):
     ]
 
 
-class ContentPage(Page):
-    body = StreamField(BlogBlock())
 # class BlogPageGalleryImage(Orderable):
 #     page = ParentalKey(BlogPage, related_name='gallery_images')
 #     image = models.ForeignKey(

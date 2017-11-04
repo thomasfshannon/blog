@@ -1,5 +1,5 @@
-{% load static wagtailuserbar %}
-
+{% load static wagtailuserbar  wagtailsettings_tags %}
+{% get_settings %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -33,8 +33,12 @@
 
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
-
-        {% block content %}{% endblock %}
+        <div id="app">
+            {% include "layout/nav.html" with header=settings.site_settings.Header %}
+            {% block content %}{% endblock %}   
+            {% include "layout/footer.html" with header=settings.site_settings.Header %} 
+            
+        </div>
 
         {# Global javascript #}
 

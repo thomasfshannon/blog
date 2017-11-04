@@ -2,7 +2,9 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 @import "./utils/code-highlights";
+@import "./layout/import";
 
 body {
+    margin-top: 50px;
     color: #555;
 }

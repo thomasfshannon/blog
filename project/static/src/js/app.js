@@ -1,8 +1,21 @@
-let obj = {test: true, bla: 'bla'};
+import Vue from 'vue';
+import NavWrapper from './vue/NavWrapper';
 
-const { test, bla } = obj;
 
-console.log(test, bla);
+const hello = Vue.extend({
+    data: () => {
+        return {
+            name: 'World'
+        }
+    },
+    template: '<h2>Hello {{ name }}</h2>',
+});
 
-var $ = require('jquery');
-console.log($);
+const app = new Vue({
+    components: {
+        hello,
+        NavWrapper
+    }
+});
+
+app.$mount('#app');
