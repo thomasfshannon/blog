@@ -12,7 +12,7 @@ class HomePage(Page):
     body = StreamField(GeneralBlock())
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel('body', classname="full"),
+        StreamFieldPanel('body'),
     ]
 
 
@@ -20,5 +20,13 @@ class ContentPage(Page):
     body = StreamField(GeneralBlock())
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel('body', classname="full"),
+        StreamFieldPanel('body'),
     ]
+
+
+class AboutPage(Page):
+    pass
+
+
+class ContactPage(Page):
+    pass

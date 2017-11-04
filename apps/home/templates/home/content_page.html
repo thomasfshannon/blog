@@ -1,5 +1,5 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% extends "base.html" %}
 
 {% block content %}
-    {{ block.body|richtext }}
+    {% include "sitewide/streamfields.html" %}
 {% endblock %}

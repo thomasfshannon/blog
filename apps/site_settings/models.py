@@ -1,9 +1,9 @@
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.blocks import (
-    ListBlock, StructBlock, PageChooserBlock, CharBlock
+    StructBlock, PageChooserBlock, CharBlock
 )
-from wagtail.wagtailadmin.edit_handlers import InlinePanel, PageChooserPanel, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 
 
 @register_setting(icon='site')
