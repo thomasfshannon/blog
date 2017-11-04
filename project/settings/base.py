@@ -157,3 +157,6 @@ WAGTAIL_SITE_NAME = "project"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = environ.get('KEY')
