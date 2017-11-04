@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'apps.home',
     'apps.blog',
     'apps.site_settings',
+    'apps.sitewide',
     'search',
     'project',
     'pygmentify',

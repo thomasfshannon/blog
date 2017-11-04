@@ -4,11 +4,6 @@ from django.db import models
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-
-from wagtail.wagtailcore.blocks import (
-    RichTextBlock, RawHTMLBlock, StructBlock, ChoiceBlock, StreamBlock
-)
-from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailcore.models import Page  # Orderable
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailadmin.edit_handlers import (
@@ -17,6 +12,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
+from apps.sitewide.models import GeneralBlock
 
 
 @register_snippet
@@ -73,45 +69,10 @@ class BlogTagIndexPage(Page):
         return context
 
 
-class CodeBlock(StructBlock):
-    language_choices = [
-        ('javascript', 'Javascript'),
-        ('python', 'Python'),
-        ('html', 'HTML'),
-        ('css', 'CSS'),
-        ('c', 'C')
-    ]
-    language = ChoiceBlock(choices=language_choices)
-    code = RawHTMLBlock()
-    # language = ChoiceBlock(choices = language_choices)
-    # code = RawHTMLBlock()
-
-
-class RawCodeBlock(StructBlock):
-    code = RawHTMLBlock()
-
-
-class ImageBlock(StructBlock):
-    image = ImageChooserBlock()
-    caption = RichTextBlock(max_length=255, required=False)
-
-    panels = [
-        ImageChooserPanel('image'),
-        FieldPanel('caption'),
-    ]
-
-
-class BlogBlock(StreamBlock):
-    content = RichTextBlock(icon="pilcrow")
-    code = CodeBlock(icon='code')
-    raw_code = RawCodeBlock(icon='placeholder')
-    image = ImageBlock(icon='image')
-
-
 class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
-    body = StreamField(BlogBlock())
+    body = StreamField(GeneralBlock())
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
 
@@ -128,18 +89,4 @@ class BlogPage(Page):
         ], heading="Blog information"),
         FieldPanel('intro'),
         StreamFieldPanel('body'),
-        # InlinePanel('gallery_images', label="Gallery images"),
     ]
-
-
-# class BlogPageGalleryImage(Orderable):
-#     page = ParentalKey(BlogPage, related_name='gallery_images')
-#     image = models.ForeignKey(
-#         'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
-#     )
-#     caption = models.CharField(blank=True, max_length=250)
-
-#     panels = [
-#         ImageChooserPanel('image'),
-#         FieldPanel('caption'),
-#     ]
