@@ -3,6 +3,7 @@
 node_modules
 .idea
 .envrc
+.env
 db.sqlite3
 notes.txt
 *.pyc
