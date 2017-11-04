@@ -30,3 +30,7 @@ class AboutPage(Page):
 
 class ContactPage(Page):
     pass
+
+
+class ProjectPage(Page):
+    pass
