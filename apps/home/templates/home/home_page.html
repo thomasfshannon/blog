@@ -6,6 +6,15 @@
 
 {% block content %}
     <div class="container">
-        {% include "sitewide/streamfields.html" %}
+    <h2>Blog Posts</h2>
+    <div class="row">
+        {% for b in page.blog.all %}
+            <div class="col-xs-12">
+                <h4><a href="{% pageurl b %}">{{ b.specific.date }}</a></h4>
+                <p>{{ b.specific.intro }}</p>    
+            </div>
+        {% endfor %}    
+    </div>
+    
     </div>
 {% endblock %}

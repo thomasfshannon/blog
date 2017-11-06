@@ -1,7 +1,10 @@
 import Vue from 'vue';
 import NavWrapper from './vue/NavWrapper';
+import ContactForm from './vue/ContactForm';
+import VeeValidate from 'vee-validate';
+import { SearchForm, Category, CategorySelect, FaqContainer, Question, Suggestion } from 'vue-faqs';
 
-
+Vue.use(VeeValidate);
 const hello = Vue.extend({
     data: () => {
         return {
@@ -14,7 +17,14 @@ const hello = Vue.extend({
 const app = new Vue({
     components: {
         hello,
-        NavWrapper
+        NavWrapper,
+        ContactForm,
+        FaqContainer,
+        SearchForm,
+        Category,
+        CategorySelect,
+        Question,
+        Suggestion,
     }
 });
 

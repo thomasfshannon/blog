@@ -6,30 +6,36 @@
 
 {% block content %}
     <div class="container">
-        {% for item in page.gallery_images.all %}
-            <div>
-                <img class="img img-responsive" src="{{ item.image.file.url }}" alt="{{ item.title }}" />
-                <p>{{ item.caption }}</p>
-            </div>
-        {% endfor %}
-        <h1>{{ page.title }}</h1>
-        <p class="meta">{{ page.date }}</p>
+        <div class="col-md-10">
+            {% if page.main_image.file.url %}
+                <div class="blog-banner" style="max-height: 400px; overflow: hidden; padding-top: 40px;">
+                    <img class="img img-responsive" src="{{ page.main_image.file.url  }}" alt="{{ page.main_image.title }}" />
+                </div>
+            {% endif %}
 
-        <div class="intro">{{ page.intro }}</div>
-        
-        {% include "sitewide/streamfields.html" %}
+            <h1>{{ page.title }}</h1>
+            <p class="meta">{{ page.date }}</p>
 
-        {% if page.tags.all.count %}
-            <div class="tags">
-                <h3>Tags</h3>
-                {% for tag in page.tags.all %}
-                    <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
-                {% endfor %}
-            </div>
-        {% endif %}
-        
-
-        <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>    
+            <div class="intro">{{ page.intro }}</div>
+            
+            {% include "sitewide/streamfields.html" %}       
+            <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>     
+        </div>
+        <div class="col-md-2">
+            <h3>Categories</h3>
+            {% for c in page.categories.all %}
+                {{ c }}
+            {% endfor %}
+            {% if page.tags.all.count %}
+                <div class="tags">
+                    <h3>Tags</h3>
+                    {% for tag in page.tags.all %}
+                        <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}    
+        </div>
+         
     </div>
     
 

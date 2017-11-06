@@ -1,7 +1,81 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div id="json-container-1" class="hidden">
+        [
+            {
+                "title": "Section 1",
+                "questions": [
+                    {
+                        "title": "Question 1",
+                        "text": "I'm a question look at me!"
+                    }
+                ]
+            },
+            {
+                "title": "Section 2",
+                "questions": [
+                    {
+                        "title": "Question 2",
+                        "text": "Hey there!"
+                    }
+                ]
+            }
+        ]
+    </div>
+
     <div class="container">
-        <h2>About Page</h2>
+        <div class="col-md-12">
+            <h1 class="text-lg">I'm A Developer</h1>
+            <p>I write stuff like this...</p>
+            <code name="javascript">console.log("Hello World!");</code>
+            <p>On a serious note, I primarily live in the front-end coding world.</p>
+            <p>I love Vue and building cool npm modules with it.</p>
+            <h3>Here's a faq npm module example</h3>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="faq-component-container">
+                        <faq-container jsoncontainer="json-container-1" urldisabled="true" inline-template>
+                            <div>
+                                <div class="hidden-xs">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div>
+                                                <search-form :searchbtn="'fa fa-search'">
+                                                    <h4 slot="faq-header">Frequently Asked Questions (FAQS)</h4>
+                                                </search-form>     
+                                            </div>     
+                                        </div>  
+                                    </div>    
+                                </div>
+
+                                <div class="visible-xs">
+                                    <h4>Frequently Asked Questions (FAQS)</h4>
+                                    <category-select :classname="'form-control'"></category-select>    
+                                </div>
+
+                                <suggestion>
+                                    <h4 slot="faq-no-results" class="no-results">No results found for </h4>
+                                </suggestion>
+
+                                <div class="bottom-section">
+                                    <div class="row">
+                                        <div class="col-sm-3 hidden-xs">
+                                            <category></category>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <question :left="true" :inactive="'fa fa-chevron-right'" :active="'fa fa-chevron-right open'"></question> 
+                                        </div>    
+                                    </div>    
+                                </div>
+                            </div>
+                        </faq-container>    
+                    </div>    
+                </div>    
+            </div>
+            
+            
+            
+        </div>
     </div>
 {% endblock %}
