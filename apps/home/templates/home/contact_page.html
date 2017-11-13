@@ -1,44 +1,48 @@
 {% extends "base.html" %}
+{% load wagtailcore_tags staticfiles %}
 
 {% block content %}
-    <div class="container">
+    <div class="container contact-page">
         <div class="row">
-            <div class="col-md-12"><h1 class="text-lg">Let me get to know you...</h1></div>
-            <div class="col-md-6">
-                <p>If you have any questions, have a cool project to show off, or are interested in using my services please fill out the form below</p>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <contact-form inline-template>
-                    {% verbatim %}
-                    <form class="contact-form" @submit.prevent="submit">
-                        <div v-cloak class="pending" v-if="pending"></div>
-                        <h2 v-cloak v-if="alert.success">Your form was submitted</h2>
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input class="input-item" type="text" v-model="name" />    
-                        </div>
-                        <div class="form-group" v-bind:class="{'has-error': errors.has('email')}">
-                            <label>Email</label>
-                            <input class="input-item" type="email" name="email" v-model="email" v-validate="'required|email'" />
-                            <div><span v-cloak class="control-label" v-show="errors.has('email')">{{ errors.first('email') }}</span></div> 
-                        </div>
-                        <div class="form-group">
-                            <label>Message</label>
-                            <textarea class="input-item" v-model="message"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" disabled :disabled="!this.email">Submit</button>
-                        </div>
-                    </form>
-                    {% endverbatim %}    
-                </contact-form>
-            </div>  
-            <div class="col-md-6">
-                
-            </div>  
+            <div class="col-md-7">
+                <div class="col-md-12">
+                    <h1 class="text-lg">Let me get to know you...</h1>     
+                </div>
+                <div class="col-md-10">
+                    <p>If you have any questions, have a cool project to show off, or are interested in using my services please fill out the form below</p> 
+                    <contact-form inline-template>
+                        {% verbatim %}
+                        <form class="contact-form" @submit.prevent="submit">
+                            <div v-cloak class="pending" v-if="pending"></div>
+                            <h2 v-cloak v-if="alert.success">Your form was submitted</h2>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input class="input-item" type="text" v-model="name" />    
+                            </div>
+                            <div class="form-group" v-bind:class="{'has-error': errors.has('email')}">
+                                <label>Email</label>
+                                <input class="input-item" type="email" name="email" v-model="email" v-validate="'required|email'" />
+                                <div><span v-cloak class="control-label" v-show="errors.has('email')">{{ errors.first('email') }}</span></div> 
+                            </div>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea class="input-item" v-model="message"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" disabled :disabled="!this.email">Submit</button>
+                            </div>
+                        </form>
+                        {% endverbatim %}    
+                    </contact-form>
+                </div>
+            </div> 
+            <div class="col-md-5">
+                <div class="col-md-12">
+                    <h1 class="text-lg">Or see stuff on...</h1>
+                </div>
+                <img class="social" src="{% static "/src/img/github.png" %}" alt="github" />
+                <img class="social" src="{% static "/src/img/linkedin.svg" %}" alt="linkedin" />
+            </div> 
         </div>
     </div>
 {% endblock %}

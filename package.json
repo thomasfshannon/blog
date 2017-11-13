@@ -30,7 +30,7 @@
     "url-loader": "^0.6.2",
     "vee-validate": "^2.0.0-rc.21",
     "vue": "^2.5.2",
-    "vue-faqs": "git+ssh://git@bitbucket.org/inqpharm/vue-faqs.git",
+    "vue-faqs": "git+ssh://git@bitbucket.org/inqpharm/vue-faqs",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.8.1",
     "webpack-bundle-tracker": "^0.2.0",

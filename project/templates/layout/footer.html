@@ -1,9 +1,11 @@
-<footer class="footer">
-    <div class="container">
-        <ul class="list-unstyled">
-            {% for l in header.links %}
-                <li class="footer-item"><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
-            {% endfor %}    
-        </ul>
-    </div>
-</footer>
+<div class="footer-wrapper">
+    <footer class="footer">
+        <div class="container">
+            <ul class="list-unstyled">
+                {% for l in header.links %}
+                    <li class="footer-item"><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
+                {% endfor %}    
+            </ul>
+        </div>
+    </footer>
+</div>

@@ -6,22 +6,28 @@
 
 {% block content %}
     <div class="container">
-        <h1>{{ page.title }}</h1>
+        <h1 class="text-lg">{{ page.title }}</h1>
 
         <div class="intro">{{ page.intro|richtext }}</div>
 
-        {% for post in page.get_children %}
-            <div class="row">
-                <div class="col-md-3">
-                    {% if post.specific.main_image.file.url %}
-                        <img class="img img-responsive" src="{{ post.specific.main_image.file.url }}" alt="{{ post.specific.main_image.file.title }}">
-                    {% endif %}
-                </div>
-                <div class="col-md-9">
-                    <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
-                {{ post.specific.intro }}     
-                </div>
+        {% for b in blog_posts %}
+            <div class="blog-list-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        {% if b.specific.main_image.file.url %}
+                            <img class="img img-responsive" src="{{ b.specific.main_image.file.url }}" alt="{{ b.specific.main_image.file.title }}">
+                            {% else %}
+                            <img src="http://placehold.it/250x250" alt="" />
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <h2><a href="{% pageurl b %}">{{ b.title }}</a></h2>
+                    {{ b.specific.intro }}     
+                    </div>
+                </div>    
             </div>
-        {% endfor %}    
+        {% endfor %}
+
+        {% include "sitewide/blog_pagination.html" with blog_posts=blog_posts %}
     </div>
 {% endblock %}

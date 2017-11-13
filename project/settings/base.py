@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'project',
     'pygmentify',
     'webpack_loader',
+    'wagtailtinymce',
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -98,6 +99,13 @@ WEBPACK_LOADER = {
         'BUNDLE_DIR_NAME': '/dist/',
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
+}
+
+LANGUAGE_CODE = 'en-uk'
+WAGTAILADMIN_RICH_TEXT_EDITORS = {
+    'default': {
+        'WIDGET': 'apps.sitewide.models.CustomTinyMCE'
+    },
 }
 
 WSGI_APPLICATION = 'project.wsgi.application'

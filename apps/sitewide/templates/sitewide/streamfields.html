@@ -2,20 +2,27 @@
 
 {% for block in self.body %}
     {% if block.block_type == 'code' %}
-        {% pygmentify %}
-            <code>
-                <pre class="{{ block.value.language }}">{{ block.value.code }}</pre>
-            </code>
-        {% endpygmentify %}
+        <div class="container">
+            {% pygmentify %}
+                <code>
+                    <pre class="{{ block.value.language }}">{{ block.value.code }}</pre>
+                </code>
+            {% endpygmentify %}
+        </div>
     
     {% elif block.block_type == 'raw_code' %}
+    <div class="container">
         {{ block.value.code }}
+    </div>
 
     {% elif block.block_type == 'image' %}
 
         <img class="img img-responsive" src="{{ block.value.image.file.url }}" alt="{{ block.value.image.title }}" />
 
         {% else %}
-        {{ block.value }}
+        <div class="container">
+            {{ block.value }}    
+        </div>
+        
     {% endif %}
 {% endfor %}

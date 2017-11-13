@@ -1,5 +1,6 @@
 from django import forms
 from django.db import models
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
@@ -13,6 +14,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 from apps.sitewide.models import GeneralBlock
+
 
 
 @register_snippet
@@ -46,8 +48,19 @@ class BlogIndexPage(Page):
         # Update context to include only published posts,
         # ordered by reverse-chron
         context = super(BlogIndexPage, self).get_context(request)
-        blogpages = self.get_children().live().order_by('-first_published_at')
-        context['blogpages'] = blogpages
+        blog_resource = self.get_children().live().order_by('-first_published_at')
+        paginator = Paginator(blog_resource, 5)
+        page = request.GET.get('page')
+        try:
+            resources = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            resources = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            resources = paginator.page(paginator.num_pages)
+            
+        context['blog_posts'] = resources
         return context
 
 

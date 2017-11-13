@@ -20,6 +20,7 @@
         </title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         {% load render_bundle from webpack_loader %}
 
@@ -37,7 +38,6 @@
             {% include "layout/nav.html" with header=settings.site_settings.Header %}
             {% block content %}{% endblock %}   
             {% include "layout/footer.html" with header=settings.site_settings.Header %} 
-            
         </div>
 
         {# Global javascript #}
