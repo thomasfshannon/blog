@@ -8,5 +8,3 @@ db.sqlite3
 notes.txt
 *.pyc
 media
-project/static
-/static/
