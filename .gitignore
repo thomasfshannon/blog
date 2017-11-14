@@ -9,4 +9,3 @@ notes.txt
 *.pyc
 media
 project/static
-/static/
