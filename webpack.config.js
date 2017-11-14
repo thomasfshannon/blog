@@ -71,7 +71,12 @@ module.exports = {
             allChunks: true
         }),
         new UglifyJSPlugin(),
-        new BundleTracker({filename: './webpack-stats.json'})
+        new BundleTracker({filename: './webpack-stats.json'}),
+        new webpack.DefinePlugin({
+              'process.env': {
+                NODE_ENV: '"production"'
+              }
+        })
     ] : [
         // the css is generated to avoid having some browser sync thing set up
         new ExtractTextPlugin({
@@ -87,7 +92,7 @@ module.exports = {
     ],
     resolve: {
       alias: {
-        vue: 'vue/dist/vue.js'
+        vue: PROD ? 'vue/dist/vue.min' : 'vue/dist/vue.js'
       }
     }
     // devtool: 'source-map'

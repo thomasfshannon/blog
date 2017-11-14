@@ -149,8 +149,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    "project/static/dist",
-    "project/static/src/img"
+    os.path.join(PROJECT_DIR, 'static'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
