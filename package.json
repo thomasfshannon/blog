@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "remove": "rm -rf project/static/dist",
+    "remove": "rm -rf static",
     "serve": "npm run remove && NODE_ENV=0 webpack --hide-modules -w --config webpack.config.js",
     "dev": "npm run remove && NODE_ENV=0 webpack --hide-modules -w --config webpack.config.js",
     "prod": "npm run remove && NODE_ENV=1 webpack --hide-modules --config webpack.config.js",
