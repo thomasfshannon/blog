@@ -3,8 +3,8 @@ import dj_database_url
 
 from .base import *
 
-DEBUG = False
-WEBPACK_DEV_SERVER = False
+DEBUG = True
+
 
 try:
     from .local import *
