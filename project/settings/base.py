@@ -96,7 +96,7 @@ TEMPLATES = [
 
 WEBPACK_LOADER = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': os.path.join(BASE_DIR, '/dist/'),
+        'BUNDLE_DIR_NAME': '/dist/',
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
 }
@@ -149,7 +149,8 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'project/static'),
+    "project/static/dist",
+    "project/static/src/img"
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
