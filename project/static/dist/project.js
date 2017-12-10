@@ -129,30 +129,41 @@ var _vueFaqs = __webpack_require__(10);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_veeValidate2.default);
-var hello = _vue2.default.extend({
-    data: function data() {
-        return {
-            name: 'World'
-        };
-    },
-    template: '<h2>Hello {{ name }}</h2>'
-});
 
-var app = new _vue2.default({
-    components: {
-        hello: hello,
-        NavWrapper: _NavWrapper2.default,
-        ContactForm: _ContactForm2.default,
-        FaqContainer: _vueFaqs.FaqContainer,
-        SearchForm: _vueFaqs.SearchForm,
-        Category: _vueFaqs.Category,
-        CategorySelect: _vueFaqs.CategorySelect,
-        Question: _vueFaqs.Question,
-        Suggestion: _vueFaqs.Suggestion
-    }
-});
+if (checkDom('faq')) {
+    var faq = new _vue2.default({
+        el: '#faq',
+        components: {
+            FaqContainer: _vueFaqs.FaqContainer,
+            SearchForm: _vueFaqs.SearchForm,
+            Category: _vueFaqs.Category,
+            CategorySelect: _vueFaqs.CategorySelect,
+            Question: _vueFaqs.Question,
+            Suggestion: _vueFaqs.Suggestion
+        }
+    });
+}
 
-app.$mount('#app');
+if (checkDom('nav')) {
+    var nav = new _vue2.default({
+        el: '#nav',
+        components: {
+            NavWrapper: _NavWrapper2.default
+        }
+    });
+}
+if (checkDom('contact')) {
+    var contact = new _vue2.default({
+        el: '#contact',
+        components: {
+            ContactForm: _ContactForm2.default
+        }
+    });
+}
+
+function checkDom(id) {
+    return document.getElementById(id);
+}
 
 /***/ }),
 /* 3 */

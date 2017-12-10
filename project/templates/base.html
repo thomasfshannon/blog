@@ -34,11 +34,11 @@
 
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
-        <div id="app">
-            {% include "layout/nav.html" with header=settings.site_settings.Header %}
+            <div id="nav">
+                {% include "layout/nav.html" with header=settings.site_settings.Header %}
+            </div>
             {% block content %}{% endblock %}   
             {% include "layout/footer.html" with header=settings.site_settings.Header %} 
-        </div>
 
         {# Global javascript #}
 

@@ -6320,8 +6320,14 @@ body {
 .blog-list-item {
   padding-bottom: 20px; }
 
+.blog-item-header {
+  margin-top: 0; }
+  @media (max-width: 992px) {
+    .blog-item-header {
+      margin-top: 20px; } }
+
 body {
-  margin-top: 50px;
+  margin-top: 70px;
   color: #555; }
 
 [v-cloak] {

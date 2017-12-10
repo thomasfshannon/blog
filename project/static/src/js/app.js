@@ -5,27 +5,38 @@ import VeeValidate from 'vee-validate';
 import { SearchForm, Category, CategorySelect, FaqContainer, Question, Suggestion } from 'vue-faqs';
 
 Vue.use(VeeValidate);
-const hello = Vue.extend({
-    data: () => {
-        return {
-            name: 'World'
+
+if(checkDom('faq')) {
+    const faq = new Vue({
+        el: '#faq',
+        components: {
+            FaqContainer,
+            SearchForm,
+            Category,
+            CategorySelect,
+            Question,
+            Suggestion,
         }
-    },
-    template: '<h2>Hello {{ name }}</h2>',
-});
+    });
+}
 
-const app = new Vue({
-    components: {
-        hello,
-        NavWrapper,
-        ContactForm,
-        FaqContainer,
-        SearchForm,
-        Category,
-        CategorySelect,
-        Question,
-        Suggestion,
-    }
-});
+if(checkDom('nav')) {
+    const nav = new Vue({
+        el: '#nav',
+        components: {
+            NavWrapper
+        }
+    });
+}
+if(checkDom('contact')) {
+    const contact = new Vue({
+        el: '#contact',
+        components: {
+            ContactForm
+        }
+    });
+}
 
-app.$mount('#app');
+function checkDom(id) {
+    return document.getElementById(id);
+}

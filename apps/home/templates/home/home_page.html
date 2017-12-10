@@ -9,14 +9,9 @@
         {% include "sitewide/streamfields.html" %}
     </div>
     <div class="container">
-        <div class="row">
-              {% for b in blog_posts %}
-                <div class="col-xs-12">
-                    <h4><a href="{% pageurl b %}">{{ b.specific.date }}</a></h4>
-                    <p>{{ b.specific.intro }}</p>    
-                </div>
-              {% endfor %}
-        </div>
+        {% for b in blog_posts %}
+            {% include "blog/partials/blog-item.html" with b=b %}
+        {% endfor %}
         
         {% include "sitewide/blog_pagination.html" with blog_posts=blog_posts %}
     </div>

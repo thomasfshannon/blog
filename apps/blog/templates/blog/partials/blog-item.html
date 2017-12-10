@@ -6,11 +6,11 @@
             {% if b.specific.main_image.file.url %}
                 <img class="img img-responsive" src="{{ b.specific.main_image.file.url }}" alt="{{ b.specific.main_image.file.title }}">
             {% else %}
-                <img class="img img-responsive" src="{{ b.specific.category.icon.file.url }}" />
+                <img class="img img-responsive blog-category-img" src="{{ b.specific.category.icon.file.url }}" />
             {% endif %}
         </div>
         <div class="col-md-9">
-            <h2><a href="{% pageurl b %}">{{ b.title }}</a></h2>
+            <h2 class="blog-item-header"><a href="{% pageurl b %}">{{ b.title }}</a></h2>
             {% if b.specific.category %} <span>{{ b.specific.category }}</span> {% endif %}
             <p>{{ b.specific.intro }}</p>
         </div>
