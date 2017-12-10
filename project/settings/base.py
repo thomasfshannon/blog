@@ -102,9 +102,11 @@ WEBPACK_LOADER = {
 }
 
 LANGUAGE_CODE = 'en-uk'
+# Swap Default WYSWIYG Editors
 WAGTAILADMIN_RICH_TEXT_EDITORS = {
     'default': {
-        'WIDGET': 'apps.sitewide.models.CustomTinyMCE'
+        # 'WIDGET': 'wagtailtinymce.rich_text.TinyMCERichTextArea'
+        'WIDGET': 'apps.sitewide.richtext.CustomTinyMCE'
     },
 }
 

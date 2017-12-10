@@ -2,7 +2,7 @@ from django import forms
 from django.db import models
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.wagtailcore.models import Page  # Orderable
@@ -14,7 +14,6 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
 from apps.sitewide.models import GeneralBlock
-
 
 
 @register_snippet
@@ -44,11 +43,9 @@ class BlogIndexPage(Page):
         FieldPanel('intro', classname="full")
     ]
 
-    def get_context(self, request):
-        # Update context to include only published posts,
-        # ordered by reverse-chron
-        context = super(BlogIndexPage, self).get_context(request)
-        blog_resource = self.get_children().live().order_by('-first_published_at')
+    def blog(self, request):
+        blog = BlogIndexPage.objects.first()
+        blog_resource = blog.get_children().live().order_by('-first_published_at')
         paginator = Paginator(blog_resource, 5)
         page = request.GET.get('page')
         try:
@@ -59,8 +56,13 @@ class BlogIndexPage(Page):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
             resources = paginator.page(paginator.num_pages)
-            
-        context['blog_posts'] = resources
+
+        # make the variable 'resources' available on the template
+        return resources
+        
+    def get_context(self, request):
+        context = super(BlogIndexPage, self).get_context(request)
+        context['blog_posts'] = self.blog(request)
         return context
 
 
@@ -82,12 +84,29 @@ class BlogTagIndexPage(Page):
         return context
 
 
+class BlogCategoryIndexPage(Page):
+
+    def get_context(self, request):
+
+        # Filter by tag
+        tag = request.GET.get('tag')
+        blogpages = BlogPage.objects.filter(tags__name=tag)
+
+        # Update template context
+        context = super(BlogCategoryIndexPage, self).get_context(request)
+        context['blogpages'] = blogpages
+        return context
+
+
 class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
     body = StreamField(GeneralBlock())
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
-    categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
+    category = models.ForeignKey(
+        'blog.BlogCategory', blank=True, null=True,
+        on_delete=models.SET_NULL
+    )
     main_image = models.ForeignKey(
         'wagtailimages.Image', null=True, blank=True,
         on_delete=models.SET_NULL, related_name='+'
@@ -103,7 +122,7 @@ class BlogPage(Page):
             FieldPanel('date'),
             FieldPanel('tags'),
             ImageChooserPanel('main_image'),
-            FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('category', widget=forms.RadioSelect),
         ], heading="Blog information"),
         FieldPanel('intro'),
         StreamFieldPanel('body'),

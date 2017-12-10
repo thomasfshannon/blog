@@ -19,13 +19,13 @@
             <div class="intro">{{ page.intro }}</div>
             
             {% include "sitewide/streamfields.html" %}       
-            <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>     
+            <p><a href="/">Return to blog</a></p>     
         </div>
         <div class="col-md-2">
-            <h3>Categories</h3>
-            {% for c in page.categories.all %}
-                {{ c }}
-            {% endfor %}
+            {% if page.category %}
+                <h3>Category</h3>
+                <span><a href="{% slugurl 'category' %}?category={{ page.category }}">{{ page.category }}</a></span>
+            {% endif %}
             {% if page.tags.all.count %}
                 <div class="tags">
                     <h3>Tags</h3>
@@ -35,8 +35,5 @@
                 </div>
             {% endif %}    
         </div>
-         
     </div>
-    
-
 {% endblock %}
