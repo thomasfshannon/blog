@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'search',
     'project',
     'pygmentify',
+    'storages',
     'webpack_loader',
     'wagtailtinymce',
     'wagtail.wagtailforms',
