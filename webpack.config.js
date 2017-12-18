@@ -73,13 +73,6 @@ module.exports = {
             allChunks: true
         }),
         new UglifyJSPlugin(),
-        new CompressionPlugin({
-              asset: "[path].gz[query]",
-              algorithm: "gzip",
-              test: /\.js$|\.css$/,
-              threshold: 10240,
-              minRatio: 0.8
-        }),
         new BundleTracker({filename: './webpack-stats.json'}),
         new webpack.DefinePlugin({
               'process.env': {
