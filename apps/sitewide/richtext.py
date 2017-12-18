@@ -27,8 +27,6 @@ class CustomTinyMCE(TinyMCERichTextArea):
                 'noneditable_leave_contenteditable': True,
                 'language': translation.to_locale(translation.get_language()),
                 'language_load': True,
-                # 'extended_valid_elements' : 'a[*]',
-                'valid_elements': 'a[href|target=_blank|class]'
             },
         }
 

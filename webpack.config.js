@@ -5,6 +5,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleTracker = require('webpack-bundle-tracker');
 
+const CompressionPlugin = require("compression-webpack-plugin");
+
 const PROD = JSON.parse(process.env.NODE_ENV || '0');
 
 // currently building css if prod or not due to dealing with live changes across servers
@@ -71,6 +73,13 @@ module.exports = {
             allChunks: true
         }),
         new UglifyJSPlugin(),
+        new CompressionPlugin({
+              asset: "[path].gz[query]",
+              algorithm: "gzip",
+              test: /\.js$|\.css$/,
+              threshold: 10240,
+              minRatio: 0.8
+        }),
         new BundleTracker({filename: './webpack-stats.json'}),
         new webpack.DefinePlugin({
               'process.env': {
