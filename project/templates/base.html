@@ -25,7 +25,7 @@
         {% load render_bundle from webpack_loader %}
 
         {# Global stylesheets #}
-        {% render_bundle 'main' 'css.gz' %}
+        {% render_bundle 'main' 'css' %}
 
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
@@ -42,7 +42,7 @@
 
         {# Global javascript #}
 
-        {% render_bundle 'main' 'js.gz' %}
+        {% render_bundle 'main' 'js' %}
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
