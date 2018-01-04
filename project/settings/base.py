@@ -174,3 +174,9 @@ BASE_URL = 'http://example.com'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = environ.get('KEY')
+
+PYGMENTIFY = {
+    'style': 'default',
+    'cssclass': 'highlight',
+    'minify': True,
+}

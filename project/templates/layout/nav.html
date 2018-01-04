@@ -1,6 +1,36 @@
 <nav-wrapper inline-template>
+    <div>
+        <div class="navbar-fixed">
+            <nav>
+              <div class="nav-wrapper blue-grey darken-4">
+                <ul>
+                  {% for l in header.links %}
+                    <li><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
+                  {% endfor %}
+                </ul>
+                <ul class="right">
+                    <li @click="toggleSideBar">a</li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+
+        <div class="mobile-nav-overlay-cancel" :class="{reveal: sidebar}" @click="toggleSideBar"></div>
+
+        <div id="mySidenav" class="sidenav" :class="{'sidenav-open': sidebar}">
+            <div class="sidenav-inner">
+                <a class="closeBtn" @click="toggleSideBar">&times;</a>
+                <ul class="list-unstyled">
+                    {% for l in header.links %}
+                        <li><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% comment %}
     <nav class="navbar navbar-inverse navbar-fixed-top"> 
-        <div class="container-fluid"> 
+        <div class="container"> 
             <div class="navbar-header"> 
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" @click="toggleSideBar">
                     <span class="sr-only">Toggle navigation</span>
@@ -32,4 +62,5 @@
             </div>
         </div>
     </nav>
+    {% endcomment %}
 </nav-wrapper>

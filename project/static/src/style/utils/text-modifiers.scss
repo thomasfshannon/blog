@@ -1,3 +1,11 @@
+$screen-sm: 600px;
+
 .text-lg {
     font-size: 50px;
+}
+
+@media(max-width: $screen-sm) {
+    .text-sm-center {
+        text-align: center;
+    }
 }

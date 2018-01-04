@@ -7,7 +7,14 @@
                 <pre class="{{ block.value.language }}">{{ block.value.code }}</pre>
             </code>
         {% endpygmentify %}
-    
+        
+        {% comment %}
+        <code class="{% if block.value.language == 'html' %} language-markup {% else %} language-{{ block.value.language }} {% endif %}">
+            <pre class="{% if block.value.language == 'html' %} language-markup {% else %} language-{{ block.value.language }} {% endif %}">{{ block.value.code }}</pre>
+        </code>
+        {% endcomment %}
+
+
     {% elif block.block_type == 'raw_code' %}
         {{ block.value.code }}
 
@@ -16,8 +23,9 @@
         <img class="img img-responsive" src="{{ block.value.image.file.url }}" alt="{{ block.value.image.title }}" />
 
     {% else %}
-    
-    {{ block.value }}    
+    {% pygmentify %}
+        {{ block.value }} 
+    {% endpygmentify %}   
         
         
     {% endif %}

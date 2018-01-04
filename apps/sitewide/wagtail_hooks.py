@@ -15,7 +15,7 @@ def whitelister_element_rules():
         'td': attribute_rule({'class': True}),
         'th': attribute_rule({'class': True}),
         'blockquote': attribute_rule({'class': True}),
-        'pre': attribute_rule({'class': True}),
+        'pre': attribute_rule({'class': True, 'style': True}),
         'code': attribute_rule({'class': True}),
         'h1': attribute_rule({'class': True}),
         'h2': attribute_rule({'class': True}),

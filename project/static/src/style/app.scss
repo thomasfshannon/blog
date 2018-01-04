@@ -1,15 +1,21 @@
 // bootstrap variable needed to load fonts
-$font-size-base: 16px;
-$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+// $font-size-base: 16px;
+// $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+$roboto-font-path: "~materialize-css/dist/fonts/roboto/";
+@import "~materialize-css/sass/materialize";
 @import "./utils/import";
 @import "./layout/import";
 @import "./components/import";
 @import "./pages/import";
 
 body {
-    margin-top: 70px;
+    // margin-top: 70px;
     color: #555;
+}
+
+img {
+    max-width: 100%;
 }
 
 [v-cloak] {

@@ -19,7 +19,7 @@
             <div class="intro">{{ page.intro }}</div>
             
             {% include "sitewide/streamfields.html" %}       
-            <p><a href="/">Return to blog</a></p>     
+            <p><a href="{% slugurl 'blog' %}">Return to blog</a></p>     
         </div>
         <div class="col-md-2">
             {% if page.category %}

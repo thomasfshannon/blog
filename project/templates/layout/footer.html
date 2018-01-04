@@ -1,3 +1,34 @@
+{% load wagtailcore_tags staticfiles %}
+
+<footer class="page-footer blue-grey darken-4 text-sm-center">
+    <div class="container">
+        <div class="row">
+            <div class="col l7 s12">
+                <div class="col m5 s12">
+                    <img src="{% static "/src/img/profile.jpg" %}" alt="profile" />
+                </div>
+                <div class="col m7">
+                    <p class="grey-text text-lighten-4">Thomas Shannon is a front end engineer who builds cool webapps and loves solving puzzles. He plays a mean game of ping pong and would love to hear about your creative project!</p>
+                </div>
+            </div>
+            <div class="col l3 offset-l1 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    {% for l in header.links %}
+                        <li class="footer-item"><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
+                    {% endfor %} 
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Copyright
+            {# <a class="grey-text text-lighten-4 right" href="#!">More Links</a> #}
+        </div>
+    </div>
+</footer>
+{% comment %}
 <div class="footer-wrapper">
     <footer class="footer">
         <div class="container">
@@ -9,3 +40,4 @@
         </div>
     </footer>
 </div>
+{% endcomment %}

@@ -2,6 +2,8 @@ import Vue from 'vue';
 import NavWrapper from './vue/NavWrapper';
 import ContactForm from './vue/ContactForm';
 import VeeValidate from 'vee-validate';
+// import "materialize-css/js/forms";
+// import './prism';
 import { SearchForm, Category, CategorySelect, FaqContainer, Question, Suggestion } from 'vue-faqs';
 
 Vue.use(VeeValidate);

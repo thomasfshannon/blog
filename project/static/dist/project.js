@@ -129,6 +129,9 @@ var _vueFaqs = __webpack_require__(10);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_veeValidate2.default);
+// import "materialize-css/js/forms";
+// import './prism';
+
 
 if (checkDom('faq')) {
     var faq = new _vue2.default({
@@ -19321,7 +19324,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
             __WEBPACK_IMPORTED_MODULE_2__bus__["a" /* default */].$emit('entered', true);
             this.current = 0;
             __WEBPACK_IMPORTED_MODULE_2__bus__["a" /* default */].$emit('updateIndex', 0);
-            this.searchText = question.title;
+            this.searchText = Object(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["b" /* stripTags */])(question.title);
             __WEBPACK_IMPORTED_MODULE_2__bus__["a" /* default */].$emit('setCategory', question.parent_link);
 
             var mappedQuestions = this.faqs.filter(function (item) {
@@ -19332,7 +19335,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
               if (item.title == question.title) {
                 item.active = true;
               } else {
-                item.active = false;
+                item.active = 'hidden';
               }
             });
 
@@ -19368,7 +19371,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
           });
 
           __WEBPACK_IMPORTED_MODULE_2__bus__["a" /* default */].$on('updateText', function (val) {
-            _this.searchText = val;
+            _this.searchText = Object(__WEBPACK_IMPORTED_MODULE_1__utils_utils__["b" /* stripTags */])(val);
           });
 
           __WEBPACK_IMPORTED_MODULE_2__bus__["a" /* default */].$on('urlDisabled', function (bool) {
@@ -19388,6 +19391,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
       /* unused harmony export clearActiveNoAnimate */
       /* harmony export (immutable) */
       __webpack_exports__["a"] = filterSearch;
+      /* harmony export (immutable) */__webpack_exports__["b"] = stripTags;
       // TODO manage active states without hardcoded initalize variable
       // TODO common words
       function compareArrayPartial(title, inputWord) {
@@ -19442,6 +19446,10 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
         return results.sort(function (a, b) {
           return b.count - a.count;
         }).slice(0, limit);
+      }
+
+      function stripTags(str) {
+        return str.replace(/<(?:.*|\n)*?>/gm, '');
       }
 
       /***/
@@ -21812,6 +21820,16 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
       //
       //
       //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
 
 
       /* harmony default export */__webpack_exports__["a"] = {
@@ -21835,13 +21853,33 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
         },
         methods: {
           handleActive: function handleActive(state) {
-            return state == 'initialized' || state == true;
+            if (state === true) {
+              return 'active';
+            }
+            if (state === 'hidden') {
+              return 'hidden';
+            }
+            return false;
+          },
+          handleRotation: function handleRotation(state, active, inactive) {
+            if (state === true) {
+              return active;
+            } else if (state === 'hidden') {
+              return inactive;
+            } else {
+              return inactive;
+            }
           },
           toggleActive: function toggleActive(question) {
             this.selectedQuestions.map(function (item) {
               if (item.id === question.id) {
-                item.active = !item.active;
-                return item;
+                if (item.active === true) {
+                  item.active = false;
+                } else if (item.active === false) {
+                  item.active = true;
+                } else if (item.active === 'hidden') {
+                  item.active = true;
+                }
               }
             });
 
@@ -21903,49 +21941,75 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
             staticClass: "accordion",
             attrs: {
               "name": question.title
+            },
+            domProps: {
+              "innerHTML": _vm._s(question.title)
             }
-          }, [_vm._v(_vm._s(question.title))]), _vm._v(" "), _c('div', {
+          }), _vm._v(" "), _c('div', {
             staticClass: "accordian-panel",
-            class: _vm.handleActive(question.active) ? 'active' : '',
+            class: _vm.handleActive(question.active),
             domProps: {
               "innerHTML": _vm._s(question.text)
             }
           })]), _vm._v(" "), _c('div', {
             staticClass: "icon-wrap"
-          }, [_vm.icon ? _c('span', {
+          }, [_vm.icon && question.active !== 'hidden' ? _c('span', {
             staticClass: "img-wrap"
           }, [_c('img', {
-            class: _vm.handleActive(question.active) ? _vm.active : _vm.inactive,
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive),
+            attrs: {
+              "src": _vm.icon,
+              "alt": ""
+            }
+          })]) : _vm._e(), _vm._v(" "), _vm.icon && question.active === 'hidden' ? _c('span', {
+            staticClass: "img-wrap"
+          }, [_c('img', {
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive),
             attrs: {
               "src": _vm.icon,
               "alt": ""
             }
           })]) : _vm._e(), _vm._v(" "), !_vm.icon ? _c('span', {
-            class: _vm.handleActive(question.active) ? _vm.active : _vm.inactive
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive)
+          }) : _vm._e(), _vm._v(" "), !_vm.icon ? _c('span', {
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive)
           }) : _vm._e()])]) : _vm._e(), _vm._v(" "), _vm.left ? _c('div', {
             staticClass: "question-inner"
           }, [_c('div', {
             staticClass: "icon-wrap"
-          }, [_vm.icon ? _c('span', {
+          }, [_vm.icon && question.active !== 'hidden' ? _c('span', {
             staticClass: "img-wrap"
           }, [_c('img', {
-            class: _vm.handleActive(question.active) ? _vm.active : _vm.inactive,
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive),
             attrs: {
               "src": _vm.icon,
               "alt": ""
             }
-          })]) : _vm._e(), _vm._v(" "), !_vm.icon ? _c('span', {
-            class: _vm.handleActive(question.active) ? _vm.active : _vm.inactive
+          })]) : _vm._e(), _vm._v(" "), _vm.icon && question.active === 'hidden' ? _c('span', {
+            staticClass: "img-wrap"
+          }, [_c('img', {
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive),
+            attrs: {
+              "src": _vm.icon,
+              "alt": ""
+            }
+          })]) : _vm._e(), _vm._v(" "), !_vm.icon && question.active !== 'hidden' ? _c('span', {
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive)
+          }) : _vm._e(), _vm._v(" "), !_vm.icon && question.active === 'hidden' ? _c('span', {
+            class: _vm.handleRotation(question.active, _vm.active, _vm.inactive)
           }) : _vm._e()]), _vm._v(" "), _c('div', {
             staticClass: "question-block"
           }, [_c('a', {
             staticClass: "accordion",
             attrs: {
               "name": question.title
+            },
+            domProps: {
+              "innerHTML": _vm._s(question.title)
             }
-          }, [_vm._v(_vm._s(question.title))]), _vm._v(" "), _c('div', {
+          }), _vm._v(" "), _c('div', {
             staticClass: "accordian-panel",
-            class: _vm.handleActive(question.active) ? 'active' : '',
+            class: _vm.handleActive(question.active),
             domProps: {
               "innerHTML": _vm._s(question.text)
             }
@@ -21996,13 +22060,14 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
               item.active = 'hidden';
               return item;
             });
+
+            this.activeCategory = item.title;
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('setCategory', item.title);
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('setQuestions', item.questions);
-            this.activeCategory = item.title;
 
             if (!this.urlDisabled) {
               var base = this.url;
-              history.replaceState({}, null, '/' + item.link);
+              history.replaceState({}, null, '/' + query.link);
             }
           }
         },
@@ -22022,10 +22087,6 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
           });
 
           __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$on('setInitialCategory', function (category) {
-            _this.activeCategory = category;
-          });
-
-          __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$on('setCategory', function (category) {
             _this.activeCategory = category;
           });
 
@@ -22100,12 +22161,17 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
           };
         },
         methods: {
-          fetchCategory: function fetchCategory(item) {
+          fetchCategory: function fetchCategory(e) {
             var _this = this;
 
             var query = this.faqs.filter(function (item) {
               return item.title == _this.selectedCategory;
             })[0];
+
+            query.questions.map(function (item) {
+              item.active = 'hidden';
+              return item;
+            });
 
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('setCategory', query.title);
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('fromSelect', query.title);
@@ -22234,7 +22300,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
           querySelect: function querySelect(question) {
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('showSearch', false);
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('updateIndex', 0);
-            __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('setCategory', question.title);
+            __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('setCategory', question.parent_link);
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('entered', true);
             __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('updateText', question.title);
             var mappedQuestions = this.faqs.filter(function (item) {
@@ -22245,7 +22311,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                 if (item.title == question.title) {
                   item.active = true;
                 } else {
-                  item.active = false;
+                  item.active = 'hidden';
                 }
               });
 
@@ -22325,12 +22391,15 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
               "parent": result.parent_link,
               "child": result.link
             },
+            domProps: {
+              "innerHTML": _vm._s(result.title)
+            },
             on: {
               "click": function click($event) {
                 _vm.querySelect(result);
               }
             }
-          }, [_vm._v(_vm._s(result.title))]);
+          });
         })) : _vm._e(), _vm._v(" "), _vm.activeForm && _vm.hasInput && _vm.searchResults.length == 0 ? _c('div', {
           staticClass: "faq-no-results"
         }, [_vm._t("faq-no-results", [_vm._v(_vm._s(_vm.noResults))]), _vm._v(" "), _c('span', [_vm._v("\"" + _vm._s(_vm.inputVal) + "\"")])], 2) : _vm._e()])]);

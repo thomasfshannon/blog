@@ -8,14 +8,13 @@
       {% endif %}
 
       {% for blogpage in blogpages %}
-
-            <p>
-                <h3><a href="{% pageurl blogpage %}">{{ blogpage.title }}</a></h3><br />
-                <small>Revised: {{ blogpage.latest_revision_created_at }}</small><br />
+            <div class="blog-category-item">
+                <h3><a href="{% pageurl blogpage %}">{{ blogpage.title }}</a></h3>
+                <small>Revised: {{ blogpage.latest_revision_created_at }}</small>
                 {% if blogpage.author %}
                   <p>By {{ blogpage.author.profile }}</p>
                 {% endif %}
-            </p>
+            </div>
 
       {% empty %}
           No pages found with that tag.

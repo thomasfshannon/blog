@@ -2,18 +2,18 @@
 {% load site_tags %}
 
 {% block content %}
-    <div id="json-container-1" class="hidden">
+    <div id="json-container-1" style="display: none;">
         [
             {
                 "title": "Section 1",
                 "questions": [
                     {
                         "title": "Why did you build this?",
-                        "text": "{{ "<p>I built this as a tool for my current job.</p>"|replace_entities }}"
+                        "text": "{{ "<p style='margin: 0;'>I built this as a tool for my current job.</p>"|replace_entities }}"
                     },
                     {
                         "title": "What did you use?",
-                        "text": "{{ "<p>I used Vue and npm to create this plugin.</p>"|replace_entities }}"
+                        "text": "{{ "<p style='margin: 0;'>I used Vue and npm to create this plugin.</p>"|replace_entities }}"
                     }
                 ]
             },
@@ -30,5 +30,49 @@
     </div>
     <div class="container">
         {% include "sitewide/streamfields.html" %}
+    </div>
+
+    <div id="faq">
+        <div class="row">
+            <div class="container">
+                <div class="faq-component-container">
+                    <faq-container jsoncontainer="json-container-1" urldisabled="true" inline-template>
+                        <div>
+                            <div class="hide-on-small-only">
+                                <div class="row">
+                                    <div class="col s12">
+                                        <div>
+                                            <search-form>
+                                                <h4 slot="faq-header"></h4>
+                                            </search-form>     
+                                        </div>     
+                                    </div>  
+                                </div>    
+                            </div>
+
+                            <div class="show-on-small">
+                                <h4>Frequently Asked Questions</h4>
+                                <category-select :classname="'form-control'"></category-select>    
+                            </div>
+
+                            <suggestion>
+                                <h4 slot="faq-no-results" class="no-results">No results found for </h4>
+                            </suggestion>
+
+                            <div class="bottom-section">
+                                <div class="row">
+                                    <div class="col m3 hide-on-small-only">
+                                        <category></category>
+                                    </div>
+                                    <div class="col s9">
+                                        <question :left="true" :inactive="'fa fa-chevron-right'" :active="'fa fa-chevron-right open'"></question> 
+                                    </div>    
+                                </div>    
+                            </div>
+                        </div>
+                    </faq-container>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
