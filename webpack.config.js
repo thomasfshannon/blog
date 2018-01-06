@@ -45,6 +45,7 @@ module.exports = {
         EXTRACT_CSS,
         {
             test: /\.js$/,
+            exclude: /node_modules/,
             use: [{
                 loader: 'babel-loader',
                 query: {

@@ -3,14 +3,18 @@
         <div class="navbar-fixed">
             <nav>
               <div class="nav-wrapper blue-grey darken-4">
-                <ul>
-                  {% for l in header.links %}
-                    <li><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
-                  {% endfor %}
-                </ul>
-                <ul class="right">
-                    <li @click="toggleSideBar">a</li>
-                </ul>
+                <div class="container">
+                    <div class="row">
+                        <ul>
+                          {% for l in header.links %}
+                            <li><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
+                          {% endfor %}
+                        </ul>
+                        <ul class="right show-on-small">
+                            <li @click="toggleSideBar">x</li>
+                        </ul>
+                    </div>
+                </div>
               </div>
             </nav>
           </div>
