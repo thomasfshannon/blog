@@ -33,9 +33,9 @@ module.exports = {
     module: {
         rules: [
         { 
-            test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+            test: /\.(woff|woff2|eot|ttf)$/, 
             use: [{
-                loader: 'url-loader?limit=100000'
+                loader: 'url-loader?limit=100000name=fonts/[name].[ext]'
             }]
         },
         {
