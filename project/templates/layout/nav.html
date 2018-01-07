@@ -11,7 +11,13 @@
                           {% endfor %}
                         </ul>
                         <ul class="right show-on-small">
-                            <li @click="toggleSideBar">x</li>
+                            <li @click="toggleSideBar">
+                                <a class="hamburger">
+                                <p class="bar"></p>
+                                <p class="bar"></p>
+                                <p class="bar"></p>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -21,7 +27,7 @@
 
         <div class="mobile-nav-overlay-cancel" :class="{reveal: sidebar}" @click="toggleSideBar"></div>
 
-        <div id="mySidenav" class="sidenav" :class="{'sidenav-open': sidebar}">
+        <div id="mySidenav" class="sidenav blue-grey darken-4" :class="{'sidenav-open': sidebar}">
             <div class="sidenav-inner">
                 <a class="closeBtn" @click="toggleSideBar">&times;</a>
                 <ul class="list-unstyled">
@@ -32,39 +38,4 @@
             </div>
         </div>
     </div>
-    {% comment %}
-    <nav class="navbar navbar-inverse navbar-fixed-top"> 
-        <div class="container"> 
-            <div class="navbar-header"> 
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" @click="toggleSideBar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button> 
-                <a href="/" class="navbar-brand">Dev By Thomas</a> 
-            </div> 
-            <div class="collapse navbar-collapse"> 
-                <ul class="nav navbar-nav">
-                    {% for l in header.links %}
-                            <li><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
-                    {% endfor %}
-                </ul> 
-            </div> 
-        </div> 
-
-        <div class="mobile-nav-overlay-cancel" :class="{reveal: sidebar}" @click="toggleSideBar"></div>
-
-        <div id="mySidenav" class="sidenav" :class="{'sidenav-open': sidebar}">
-            <div class="sidenav-inner">
-                <a class="closeBtn" @click="toggleSideBar">&times;</a>
-                <ul class="list-unstyled">
-                    {% for l in header.links %}
-                        <li><a href="{{ l.value.link.url }}">{{ l.value.text }}</a></li>    
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-    {% endcomment %}
 </nav-wrapper>

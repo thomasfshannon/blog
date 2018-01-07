@@ -47,7 +47,9 @@
             <div id="nav">
                 {% include "layout/nav.html" with header=settings.site_settings.Header %}
             </div>
-            {% block content %}{% endblock %}   
+            <main>
+                {% block content %}{% endblock %}
+            </main>   
             {% include "layout/footer.html" with header=settings.site_settings.Header %} 
 
         {# Global javascript #}

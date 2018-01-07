@@ -37,6 +37,7 @@
     .faq-search-input-container {
         input {
             padding: 8px;
+            box-sizing: border-box;
             width: 100%;
             // opacity: 1;
             // transition: opacity .3s ease .1s;

@@ -1,0 +1,17 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div>
+    {% if page.main_image.file.url %}
+        <div class="blog-banner" style="max-height: 400px; overflow: hidden; padding-top: 40px;">
+            <img class="img img-responsive" src="{{ page.main_image.file.url  }}" alt="{{ page.main_image.title }}" />
+        </div>
+    {% endif %}
+
+
+    <h2>{{ page.title }}</h2>
+    <p class="meta">{{ page.date }}</p>
+    <div class="intro">{{ page.intro }}</div>
+
+    {% include "sitewide/streamfields.html" %}       
+    <p><a href="{% slugurl 'blog' %}">Return to blog</a></p>  
+</div>

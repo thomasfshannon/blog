@@ -6,34 +6,13 @@
 
 {% block content %}
     <div class="container">
-        <div class="col-md-10">
-            {% if page.main_image.file.url %}
-                <div class="blog-banner" style="max-height: 400px; overflow: hidden; padding-top: 40px;">
-                    <img class="img img-responsive" src="{{ page.main_image.file.url  }}" alt="{{ page.main_image.title }}" />
-                </div>
-            {% endif %}
-            
-            
-            <h1>{{ page.title }}</h1>
-            <p class="meta">{{ page.date }}</p>
-            <div class="intro">{{ page.intro }}</div>
-            
-            {% include "sitewide/streamfields.html" %}       
-            <p><a href="{% slugurl 'blog' %}">Return to blog</a></p>     
-        </div>
-        <div class="col-md-2">
-            {% if page.category %}
-                <h3>Category</h3>
-                <span><a href="{% slugurl 'category' %}?category={{ page.category }}">{{ page.category }}</a></span>
-            {% endif %}
-            {% if page.tags.all.count %}
-                <div class="tags">
-                    <h3>Tags</h3>
-                    {% for tag in page.tags.all %}
-                        <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
-                    {% endfor %}
-                </div>
-            {% endif %}    
+        <div class="row">
+            <div class="col m10">
+                {% include "blog/partials/blog-content.html" %}   
+            </div>
+            <div class="col m2">
+                {% include "blog/partials/category-sidebar.html" %}   
+            </div>
         </div>
     </div>
 {% endblock %}

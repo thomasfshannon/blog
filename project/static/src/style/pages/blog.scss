@@ -13,3 +13,35 @@
         margin-top: 20px;
     }
 }
+
+@media (min-width: 768px) {
+  .responsive-horizontal {
+    .card-image {
+      height: 100%;
+      max-height: none;
+      overflow: visible;
+      img {
+        max-height: 100%;
+        width: auto;
+      }
+    }
+    display: flex;
+    .card-image {
+      max-width: 50%;
+      img {
+        border-radius: 2px 0 0 2px;
+        max-width: 100%;
+        width: auto;
+      }
+    }
+    .card-stacked {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      position: relative;
+      .card-content {
+        flex-grow: 1;
+      }
+    }
+  }
+}

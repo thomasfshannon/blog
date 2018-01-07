@@ -1,0 +1,13 @@
+.show-on-small {
+    display: none;
+}
+
+@media(max-width: 768px) {
+    .show-on-small {
+        display: block;
+    }
+
+    .hide-on-small-only {
+        display: none;
+    }
+}  

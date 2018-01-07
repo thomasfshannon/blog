@@ -127,3 +127,7 @@ class BlogPage(Page):
         FieldPanel('intro'),
         StreamFieldPanel('body'),
     ]
+
+
+class BlogProgress(Page):
+    pass

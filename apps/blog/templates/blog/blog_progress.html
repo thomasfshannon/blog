@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load pygmentify_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col m10">
+                <div>
+                    {% if page.main_image.file.url %}
+                        <div class="blog-banner" style="max-height: 400px; overflow: hidden; padding-top: 40px;">
+                            <img class="img img-responsive" src="{{ page.main_image.file.url  }}" alt="{{ page.main_image.title }}" />
+                        </div>
+                    {% endif %}
+
+
+                    <h2>{{ page.title }}</h2>
+                    <p class="meta">{{ page.date }}</p>
+                    <div class="intro">{{ page.intro }}</div>
+
+                    {% pygmentify %}
+                    <p>Did you ever try to learn webpack but got super confused looking at the documentation? Me too. Today, I'm going to walk through setting up a simple project which&nbsp;let's you use es6 in your project. At the end of this you'll have a simple starter which you can be used to make an npm package or a starter for your own site.</p>
+                    <p>First let's make a new folder.</p>
+                    <pre>mkdir es6-js</pre>
+                    <p>Then lets create a package.json file</p>
+                    <pre>npm init -y</pre>
+                    <p>Which will generate a package.json file like this</p>
+                    <pre>
+                    {
+                    "name": "es6-js",
+                    "version": "1.0.0",
+                    "description": "",
+                    "main": "index.js",
+                    "scripts": {
+                    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"
+                    },
+                    "keywords": [],
+                    "author": "",
+                    "license": "ISC"
+                    }
+                    </pre>
+                    <p>Now we need to set up a webpack config file and others in the terminal:</p>
+                    <pre>touch webpack.config.js index.html index.js</pre>
+                    <p>Lets also add some additional files</p>
+                    <p>This is a object which will handle how your code gets bundled and also is responsible for exporting all your modules into a bundle or fonts or whatever you like. So let's begin by defining an entry point and output point</p>
+            <pre>
+                module.exports = {
+                    entry: {
+                    filename: './index.js'
+                    },
+                    output: {
+                        filename: './bundle.js'
+                    }
+                }
+            </pre>
+            <p>If you have webpack installed globally (npm install -g webpack) you can then run webpack in the terminal and should see something like this generated</p>
+            <pre>
+                Hash: 27e97c9830e9a07d31a5
+                Version: webpack 3.6.0
+                Time: 59ms
+                Asset     Size  Chunks             Chunk Names
+                ./bundle.js  2.47 kB       0  [emitted]  filename
+                [0] ./index.js 0 bytes {0} [built]
+            </pre>
+            <p>Congratulation you made a js bundle using webpack! Now get your html file with it linked up</p>
+            <p>Cool so now what? Well we need to transpile newer browser features like const, fat arrow functions, or object deconstruction</p>
+            <p>So now we need a transpiler lets use babel... In the terminal type</p>
+            <pre>npm install --save-dev babel-loader webpack babel-core</pre>
+            <p>You may have webpack installed globally but babel-loader depends on it to run properly.</p>
+            <p>Cool now we need to tell webpack to use babel-loader. We can do processing of this sort through a set of rules defined in modules. You can have rules for css fonts all sorts of stuff. Basically all your assets can be loaded through webpack and then when your site goes live it can extract that bundle into font folders etc. That's later.</p>
+            <p>Now the bundle looks like this</p>
+            <pre>
+                module.exports = {
+                  entry: {
+                    filename: './index.js'
+                  },
+                  output: {
+                    filename: './bundle.js'
+                  },
+                  module: {
+                    rules: [
+                        {
+                            test: /\.js$/,
+                            exclude: /node_modules/,
+                            use: [{
+                                loader: 'babel-loader',
+                            }]
+                        }
+                    ]
+                  }
+                }
+            </pre>
+            <p>Notice there is now an array with a rule for js. Each rule is an object with a few important keys</p>
+            <p>Notice test has a regex pattern which looks at js files. Also notice that we are excluding the node_modules folder. We only need to process our js.</p>
+            <p>Now create a .babelrc file. This tells webpack what features you are using in js so it knows how to transpile it to a browser friendly format. (cough... Internet Explorer cough cough)</p>
+            <pre>touch .babelrc</pre>
+            <p>Then we need to install this preset</p>
+            <pre>
+                npm install --save-dev babel-preset-es2015
+            </pre>
+            <p>A more complrehensive explanation of what this is can be found here. <a href="https://babeljs.io/docs/plugins/preset-es2015/">https://babeljs.io/docs/plugins/preset-es2015/</a></p>
+            <p>K, let's see if this has worked. Go to your index.js file and throw in something like this</p>
+            <pre>
+                const arr = [1, 2, 3].map((item) => item * 5);
+
+                const obj = {
+                    first: 'John', last: 'Doe' 
+                };
+
+                let { first, last } = obj;
+            </pre>
+            <p>Then if you run webpack in the terminal now. If you go over to the bundle and check it out you'll see something like this.</p>
+            <pre>
+                var arr = [1, 2, 3].map(function (item) {
+                    return item * 5;
+                });
+
+                var obj = {
+                    first: 'John', last: 'Doe'
+                };
+
+                var first = obj.first,
+                last = obj.last;
+            </pre>
+            <p>Badda boom! There it is, browser compliant js. Cool so now we have js. How about we also get some sass going? We're going need a few packages</p>
+            <pre>
+                npm install --save-dev style-loader css-loader sass-loader node-sass
+            </pre>
+            <p>So if we are doing things the webpack way everything gets loaded as one big js file that gets injected onto the page. (For development only). Then we can add this to the loaders array</p>
+            <pre>
+                ... 
+                {
+                    test:/\.scss$/,
+                    use:['style-loader','css-loader', 'sass-loader']
+                }
+            </pre>
+            <p>Then create a index.scss file and run webpack-dev-server</p>
+            <p>You may have it globally (npm install --save-dev webpack-dev-server) or you can install it as a dev dependency and include it as a script in your package.json as well</p>
+            <pre>
+            touch index.scss && webpack-dev-server
+            </pre>
+            <p>It will run on localhost:8080 by default so fire it up in your browser</p>
+            <p>Then add some sass to your index.scss file to test it. Any nested thing will do</p>
+            <pre class="scss">
+                $gray: #555;
+                html {
+                    body {
+                        background: $gray;
+                    }
+                }
+            </pre>
+            <p>If you inspect element you will see in the head this...</p>
+            <pre class="css">
+                <style type="text/css">html body {
+                  background: #555; }
+                </style>
+            </pre>
+            <p>Using the the array of loaders (going from right to left) webpack loads the js file and injects the a style tag with all your styles in the head</p>
+            <p>That's cool you may say... How the heck do I get a actual css file though?</p>
+            <p>Plugins of course! (Not really of course)</p>
+            <p>Plugins add functionality to webpack. By default webpack loads the styles through the bundle. Let's change that default behavior and have it create a css file we can include in our index.html file</p>
+            <p>To extract things out from the bundle we can use extract-text-webpack-plugin</p>
+            <pre>npm install --save-dev extract-text-webpack-plugin</pre>
+            <p>Then alter the webpack config a bit add this on the top</p>
+            <pre>
+                const ExtractTextPlugin = require('extract-text-webpack-plugin');
+                const extractSass = new ExtractTextPlugin({
+                    filename: "index.css",
+                    disable: process.env.NODE_ENV === "development"
+                });
+                ...
+            </pre>
+            <p>Then change the scss loader to look like this</p>
+            <pre>
+                ...
+                {
+                    test:/\.scss$/,
+                    use: extractSass.extract({
+                        use: [{
+                            loader: "css-loader"
+                        }, {
+                            loader: "sass-loader"
+                        }],
+                        // use style-loader in development
+                        fallback: "style-loader"
+                    })
+                }
+            </pre>
+            <p>Then after the module object add</p>
+            <pre>
+                ...
+                plugins: [
+                    extractSass
+                ]
+            </pre>
+            <p>A few things are happening here. We are importing the extract text plugin. Then we have a variable which creates an instance of this plugin. Notice there is a disable option. It is checking an environmental variable. One we haven't setup yet. If the env is development this plugin is disabled and wont create a css file and go to the "fallback" of style-loader (where it gets injected into the head of the html file the bundle is being served from)</p>
+            <p>Then a plugins array is being added to the webpack object. This allows to alter/extend the functionalty of webpack.</p>
+            <p>So let's add some environment variables. Npm scripts to the rescue!</p>
+            <p>In your package.json we'll add a couple of scripts for the project. dev for development and prod for production.</p>
+            <p>Note: Building a complete production ready build is beyond the scope of this tutorial. That's why we're not hashing filenames to avoid cacheing.</p>
+            <p>So now lets have the package.json file look like this</p>
+            <pre>
+                ...
+                "scripts": {
+                  "test": "echo \"Error: no test specified\" && exit 1",
+                  "dev": "webpack-dev-server",
+                  "prod": "NODE_ENV=production webpack -p"
+                },
+            </pre>
+            <p>Now we can just run <code>npm run prod</code></p>
+            <p>Then node environment variable is set to production, the extract text plugin will run and generate a css file. Notice that the css and js files are now both much smaller. That is from the p flag at the end. You could also include plugins to have the same effect if you'd rather be more explicit.</p>
+            <p>K. That's all she wrote. I'll make this a two part post so I can go over actually making this</p>
+            {% endpygmentify %}
+
+                    <p><a href="{% slugurl 'blog' %}">Return to blog</a></p>  
+                </div>  
+            </div>
+            <div class="col m2">
+                {% include "blog/partials/category-sidebar.html" %}   
+            </div>
+        </div>
+    </div>
+{% endblock %}
