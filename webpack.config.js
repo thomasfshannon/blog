@@ -32,11 +32,25 @@ module.exports = {
     },
     module: {
         rules: [
-        { 
-            test: /\.(woff|woff2|eot|ttf)$/, 
-            use: [{
-                loader: 'url-loader?limit=100000name=fonts/[name].[ext]'
-            }]
+        // { 
+        //     test: /\.(woff|woff2|eot|ttf)$/, 
+        //     use: [{
+        //         loader: 'url-loader?limit=100000name=fonts/[name].[ext]'
+        //     }]
+        // },
+
+        {
+            // Capture eot, ttf, woff, and woff2
+            test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+            // include,
+            // exclude,
+
+            use: {
+                loader: 'file-loader',
+                options: {
+                    name: '/fonts/[name].[ext]',
+                },
+            },
         },
         {
         test: /\.scss$/,
